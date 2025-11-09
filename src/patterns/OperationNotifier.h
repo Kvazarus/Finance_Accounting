@@ -14,16 +14,6 @@ public:
         observers.push_back(observer);
     }
 
-    void detach(const std::shared_ptr<IOperationObserver>& observer) {
-        observers.erase(
-                std::__remove_if(observers.begin(), observers.end(),
-                          [&](__gnu_cxx::__normal_iterator<std::weak_ptr<IOperationObserver> *, std::vector<std::weak_ptr<IOperationObserver>>> w) {
-                              auto s = w->lock();
-                              return !s || s == observer;
-                          }),
-                observers.end());
-    }
-
     void notifyAdded(const Operation& op) {
         for (auto it = observers.begin(); it != observers.end();) {
             if (auto obs = it->lock()) {
@@ -61,3 +51,4 @@ public:
 };
 
 #endif //KPO2_OPERATIONNOTIFIER_H
+
