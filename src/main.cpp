@@ -75,7 +75,8 @@ int main() {
     auto& commandManager = injector.create<CommandManager&>();
     auto& repositoryCaretaker = injector.create<RepositoryCaretaker&>();
 
-    operationNotifier.attach(std::make_shared<AccountBalanceObserver>(repo.getBankAccounts()));
+    auto observer = std::make_shared<AccountBalanceObserver>(repo.getBankAccounts());
+    operationNotifier.attach(observer);
 
     bool hasSnapshot = false;
 
